@@ -74,7 +74,7 @@ async function getById(stayId) {
 }
 
 async function update(stay) {
-    console.log('service update stay',stay);
+    console.log('service update stay', stay);
     try {
         // peek only updatable fields!
         const stayToSave = {
@@ -115,9 +115,25 @@ async function add(stay) {
     try {
         // peek only updatable fields!
         const stayToAdd = {
-            byUserId: ObjectId(stay.byUserId),
-            aboutUserId: ObjectId(stay.aboutUserId),
-            txt: stay.txt
+            _id: ObjectId(stay._id),
+            name: stay.name,
+            imgUrls: ["https://a0.muscache.com/im/pictures/pro_photo_tool/Hosting-38500362-unapproved/original/8a3b09d8-666c-4a8c-bbe3-ce987a0e2431.JPEG?im_w=720"],
+            summary: stay.summary,
+            price: stay.price,
+            capacity: stay.capacity,
+            amenities: [
+                "TV",
+                "Wifi",
+                "Kitchen",
+                "A/C"
+              ],
+            host: {
+                fullname: stay.host.fullname
+            },
+            loc: {
+                address: stay.loc.address
+            },
+            reviews:[],
         }
         const collection = await dbService.getCollection('stay')
         await collection.insertOne(stayToAdd)

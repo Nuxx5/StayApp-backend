@@ -45,16 +45,16 @@ async function deleteStay(req, res) {
 async function addStay(req, res) {
     try {
         var stay = req.body
-        stay.byUserId = req.session.user._id
+        // stay.byUserId = req.session.user._id
         stay = await stayService.add(stay)
         
         // prepare the updated stay for sending out
-        stay.byUser = await userService.getById(stay.byUserId)
-        stay.aboutUser = await userService.getById(stay.aboutUserId)
+        // stay.byUser = await userService.getById(stay.byUserId)
+        // stay.aboutUser = await userService.getById(stay.aboutUserId)
 
         console.log('CTRL SessionId:', req.sessionID);
         socketService.broadcast({type: 'stay-added', data: stay})
-        socketService.emitToAll({type: 'user-updated', data: stay.byUser, room: req.session.user._id})
+        // socketService.emitToAll({type: 'user-updated', data: stay.byUser, room: req.session.user._id})
         res.send(stay)
 
     } catch (err) {
