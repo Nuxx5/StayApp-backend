@@ -5,7 +5,11 @@ const stayService = require('./stay.service')
 
 async function getStays(req, res) {
     try {
-        const stays = await stayService.query(req.query)
+        console.log('req.query', req.query);
+        let filterBy = req.query;
+        console.log('filterBy in controller', filterBy)
+        if (!Object.keys(filterBy).length) filterBy = { txt: ''}
+        const stays = await stayService.query(filterBy)
         res.send(stays)
     } catch (err) {
         logger.error('Cannot get stays', err)
