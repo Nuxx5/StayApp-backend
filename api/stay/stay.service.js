@@ -43,10 +43,9 @@ async function query(filterBy = {}) {
         //     delete stay.aboutUserId
         //     return stay
         // })
-
         return stays
     } catch (err) {
-        // logger.error('cannot find stays', err)
+        logger.error('cannot find stays', err)
         throw err
     }
 
@@ -126,14 +125,14 @@ async function add(stay) {
                 "Wifi",
                 "Kitchen",
                 "A/C"
-              ],
+            ],
             host: {
                 fullname: stay.host.fullname
             },
             loc: {
                 address: stay.loc.address
             },
-            reviews:[],
+            reviews: [],
         }
         const collection = await dbService.getCollection('stay')
         await collection.insertOne(stayToAdd)
@@ -145,12 +144,10 @@ async function add(stay) {
 }
 
 function _buildCriteria(filterBy) {
-    console.log('filterBy in service', filterBy)
     const criteria = {}
-    if (filterBy.txt) {
-    const txtCriteria = { $regex: filterBy.txt, $options: 'i' };
-        criteria.txt = txtCriteria;
-        console.log('criteria', criteria);
+    if (filterBy.city) {
+        const txtCriteria = { $regex: filterBy.city, $options: 'i' }
+        criteria["loc.address"] = txtCriteria
     }
     return criteria
 }
