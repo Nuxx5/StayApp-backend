@@ -149,6 +149,18 @@ function _buildCriteria(filterBy) {
         const txtCriteria = { $regex: filterBy.city, $options: 'i' }
         criteria["loc.address"] = txtCriteria
     }
+    if (filterBy.fromPrice || filterBy.toPrice) {
+        criteria.$and = [
+            { price: { $gte: +filterBy.fromPrice } },
+            { price: { $lte: +filterBy.toPrice } }
+        ]
+    }
+    // if(filterBy.fromPrice){
+    //     criteria.price = { $gte: +filterBy.fromPrice }
+    // }
+    // if(filterBy.toPrice){
+    //     criteria.price = { $lte: +filterBy.toPrice }
+    // }
     return criteria
 }
 
