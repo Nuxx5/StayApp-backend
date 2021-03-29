@@ -45,7 +45,9 @@ function connectSockets(http, session) {
         })
         socket.on("stay-reserved", (data)=>{
             console.log('Socket hit!')
-            gIo.emit("show-msg",data)
+            // console.log(socket.broadcast)
+            // gIo.emit("show-msg",data)
+            socket.broadcast.emit("show-msg",data)
         })
     })
 }
