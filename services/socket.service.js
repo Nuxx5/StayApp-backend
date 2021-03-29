@@ -43,9 +43,9 @@ function connectSockets(http, session) {
         socket.on('user-watch', userId => {
             socket.join(userId)
         })
-        socket.on("stay-reserved", ()=>{
+        socket.on("stay-reserved", (data)=>{
             console.log('Socket hit!')
-            gIo.emit("show-msg")
+            gIo.emit("show-msg",data)
         })
     })
 }
